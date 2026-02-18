@@ -49,30 +49,5 @@ router.post(
   }
 );
 
-// PATCH /api/todos/:id
-router.patch('/todos/:id', async (req, res, next) => {
-  try {
-    const update = {};
-    if (req.body.task !== undefined) update.task = req.body.task;
-    if (req.body.completed !== undefined) update.completed = req.body.completed;
-
-    const updated = await Todo.findByIdAndUpdate(req.params.id, update, { new: true });
-    if (!updated) return res.status(404).json({ error: 'Not found' });
-    res.json(updated);
-  } catch (e) {
-    next(e);
-  }
-});
-
-// DELETE /api/todos/:id
-router.delete('/todos/:id', async (req, res, next) => {
-  try {
-    const removed = await Todo.findByIdAndDelete(req.params.id);
-    if (!removed) return res.status(404).json({ error: 'Not found' });
-    res.status(204).end();
-  } catch (e) {
-    next(e);
-  }
-});
 
 module.exports = router;
