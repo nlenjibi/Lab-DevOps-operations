@@ -63,7 +63,16 @@ router.patch('/todos/:id', async (req, res, next) => {
     next(e);
   }
 });
-
+// DELETE /api/todos/:id
+router.delete('/todos/:id', async (req, res, next) => {
+  try {
+    const removed = await Todo.findByIdAndDelete(req.params.id);
+    if (!removed) return res.status(404).json({ error: 'Not found' });
+    res.status(204).end();
+  } catch (e) {
+    next(e);
+  }
+});
 
 
 module.exports = router;
